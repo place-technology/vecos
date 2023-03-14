@@ -1,4 +1,4 @@
-# vecos
+# Vecos
 
 Releezme Vecos locker management API wrapper
 
