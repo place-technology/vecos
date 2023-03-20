@@ -107,7 +107,7 @@ module Vecos
         JSON.parse(@session.post("/api/lockers/#{locker_id}/pincode/unlock/withoutpincode").body)
       end
 
-      def share_by_path(locker_id : String, external_user_id : String, shared_user_id : String) : Models::Responses
+      def share_by_path(locker_id : String, external_user_id : String, shared_user_id : String) : Models::Responses::NoResponse
         :NoResponse
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
