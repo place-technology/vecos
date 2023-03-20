@@ -4,7 +4,7 @@ module Vecos
       def initialize(@session : Session)
       end
 
-      def list(page_number : Int32, page_size : Int32)
+      def list(page_number : Int32 = 1, page_size : Int32 = 10)
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 
@@ -18,8 +18,9 @@ module Vecos
         JSON.parse(@session.get("/api/lockerbanks/#{locker_bank_id}").body)
       end
 
-      def get_status(locker_bank_id : String)
-        JSON.parse(@session.get("/api/lockerbanks/#{locker_bank_id}/status").body)
+      def get_status(locker_bank_id : String) : Models::Responses::LockerBankSystemStatusResponse
+        Models::Responses::LockerBankSystemStatusResponse.from_json \
+          @session.get("/api/lockerbanks/#{locker_bank_id}/status").body
       end
 
       def create(name : String, description : String, door_number_prefix : String, number_order : Int32, number_order_reverse : Bool, random_allocation : Bool, section_id : String)
@@ -93,7 +94,7 @@ module Vecos
         JSON.parse(@session.get("/api/lockerbanks/#{locker_bank_id}/lockerbricks").body)
       end
 
-      def list_locker_groups(locker_bank_id : String, page_number : Int32, page_size : Int32)
+      def list_locker_groups(locker_bank_id : String, page_number : Int32 = 1, page_size : Int32 = 10)
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 
@@ -103,7 +104,7 @@ module Vecos
         JSON.parse(@session.get("/api/lockerbanks/#{locker_bank_id}/lockergroups?#{io.rewind}").body)
       end
 
-      def list_pincode_lockers(locker_bank_id : String, page_number : Int32, page_size : Int32)
+      def list_pincode_lockers(locker_bank_id : String, page_number : Int32 = 1, page_size : Int32 = 10)
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 
@@ -113,7 +114,7 @@ module Vecos
         JSON.parse(@session.get("/api/lockerbanks/#{locker_bank_id}/pincode/lockers?#{io.rewind}").body)
       end
 
-      def list_lockers(locker_bank_id : String, page_number : Int32, page_size : Int32)
+      def list_lockers(locker_bank_id : String, page_number : Int32 = 1, page_size : Int32 = 10)
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 
@@ -135,7 +136,7 @@ module Vecos
         JSON.parse(@session.get("/api/lockerbanks/pincode/offline").body)
       end
 
-      def list_locker_bank_allocations(locker_bank_id : String, page_number : Int32, page_size : Int32)
+      def list_locker_bank_allocations(locker_bank_id : String, page_number : Int32 = 1, page_size : Int32 = 10)
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 

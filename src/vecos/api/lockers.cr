@@ -4,7 +4,7 @@ module Vecos
       def initialize(@session : Session)
       end
 
-      def allocated(external_user_id : String, page_number : Int32, page_size : Int32)
+      def allocated(external_user_id : String, page_number : Int32 = 1, page_size : Int32 = 10) : Models::Responses::LockerCollectionResponse
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 
@@ -12,7 +12,8 @@ module Vecos
         builder.add("pageNumber", page_number)
         builder.add("pageSize", page_size)
 
-        JSON.parse(@session.get("/api/lockers/allocated?#{io.rewind}").body)
+        Models::Responses::LockerCollectionResponse.from_json \
+          @session.get("/api/lockers/allocated?#{io.rewind}").body
       end
 
       def canallocate?(external_user_id : String)
@@ -106,13 +107,16 @@ module Vecos
         JSON.parse(@session.post("/api/lockers/#{locker_id}/pincode/unlock/withoutpincode").body)
       end
 
-      def share_by_path(locker_id : String, external_user_id : String, shared_user_id : String)
+      def share_by_path(locker_id : String, external_user_id : String, shared_user_id : String) : Models::Responses
+        :NoResponse
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 
         builder.add("externalUserId", external_user_id)
 
-        JSON.parse(@session.post("/api/lockers/#{locker_id}/share/#{shared_user_id}?#{io.rewind}").body)
+        @session.post("/api/lockers/#{locker_id}/share/#{shared_user_id}?#{io.rewind}")
+
+        Models::Responses::NoResponse.from_json("{}")
       end
 
       def share_by_query(locker_id : String, external_user_id : String, shared_user_id : String)

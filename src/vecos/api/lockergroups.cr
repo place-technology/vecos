@@ -8,7 +8,7 @@ module Vecos
         JSON.parse(@session.get("/api/lockergroups/#{locker_group_id}").body)
       end
 
-      def list(page_number : Int32, page_size : Int32)
+      def list(page_number : Int32 = 1, page_size : Int32 = 10)
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 
@@ -18,7 +18,7 @@ module Vecos
         JSON.parse(@session.get("/api/lockergroups?#{io.rewind}").body)
       end
 
-      def list_locker_banks(locker_group_id : String, page_number : Int32, page_size : Int32)
+      def list_locker_banks(locker_group_id : String, page_number : Int32 = 1, page_size : Int32 = 10)
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 

@@ -4,7 +4,7 @@ module Vecos
       def initialize(@session : Session)
       end
 
-      def list_availability(external_user_id : String, page_number : Int32, page_size : Int32, location_id : String? = nil, section_id : String? = nil, locker_bank_id : String? = nil, locker_group_id : String? = nil, locker_id : String? = nil)
+      def list_availability(external_user_id : String, page_number : Int32 = 1, page_size : Int32 = 10, location_id : String? = nil, section_id : String? = nil, locker_bank_id : String? = nil, locker_group_id : String? = nil, locker_id : String? = nil)
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 
@@ -21,7 +21,7 @@ module Vecos
         JSON.parse(@session.get("/api/bookings/availability?#{io.rewind}").body)
       end
 
-      def list(external_user_id : String, page_number : Int32, page_size : Int32)
+      def list(external_user_id : String, page_number : Int32 = 1, page_size : Int32 = 10)
         io = IO::Memory.new
         builder = ParameterBuilder.new(io)
 

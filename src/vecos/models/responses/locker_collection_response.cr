@@ -4,7 +4,7 @@ require "../paging"
 module Vecos
   module Models
     module Responses
-      class LockerBankSystemStatusResponse
+      class LockerCollectionResponse
         include JSON::Serializable
 
         @[JSON::Field(key: "Lockers")]
